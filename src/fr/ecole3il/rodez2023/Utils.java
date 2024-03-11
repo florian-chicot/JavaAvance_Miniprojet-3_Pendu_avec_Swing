@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author florian-chicot
@@ -17,19 +19,25 @@ public class Utils {
      * @param filePath Le chemin vers le fichier à lire.
      * @return Le contenu du fichier sous forme de chaîne de caractères.
      */
-    public static String readFile(Path filePath) {
-        StringBuilder fileContent = new StringBuilder();
+    public static List<String> readFile(Path filePath) {
+        // Liste pour stocker le contenu du fichier ligne par ligne
+        List<String> fileContent = new ArrayList<>();
+
         try (BufferedReader bufferedReader = Files.newBufferedReader(filePath)) {
             String line;
+            // Lecture de chaque ligne du fichier
             while ((line = bufferedReader.readLine()) != null) {
-                fileContent.append(line).append("\n");
+                // Ajout de la ligne à la liste
+                fileContent.add(line);
             }
         } catch (IOException e) {
+            // Gestion des exceptions en cas d'erreur de lecture du fichier
             System.err.println("Error reading file: " + e.getMessage());
             e.printStackTrace();
         }
-        return fileContent.toString();
+
+        // Retourne la liste contenant le contenu du fichier
+        return fileContent;
     }
 
 }
-
