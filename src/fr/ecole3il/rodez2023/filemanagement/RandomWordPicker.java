@@ -6,6 +6,10 @@ import java.util.Random;
 
 import static fr.ecole3il.rodez2023.Utils.readFile;
 
+/**
+ * @author florian-chicot
+ * Classe utilitaire pour choisir aléatoirement un mot à partir d'un fichier.
+ */
 public class RandomWordPicker {
 
     /**
