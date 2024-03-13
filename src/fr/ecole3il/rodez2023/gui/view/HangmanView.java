@@ -1,6 +1,9 @@
 package fr.ecole3il.rodez2023.gui.view;
 
+import fr.ecole3il.rodez2023.gui.model.HangmanModel;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -11,7 +14,8 @@ public class HangmanView extends JPanel {
 
     private JPanel mainPanel;
     private JLabel wordLabel;
-    private JButton helloButton;
+    private JButton generateWordToGuessButton;
+    private JLabel wordToGuessLabel;
 
 
     /**
@@ -19,8 +23,11 @@ public class HangmanView extends JPanel {
      */
     public HangmanView() {
         this.mainPanel = new JPanel();
-        this.helloButton = new JButton("Hello World");
+        this.generateWordToGuessButton = new JButton("Générer le mot à deviner");
         this.wordLabel = new JLabel("Mot à deviner : ");
+
+        // Initialiser le libellé du mot à deviner avec une chaîne vide
+        this.wordToGuessLabel = new JLabel();
 
         // Initialisation de l'interface graphique
         createGUI();
@@ -30,8 +37,31 @@ public class HangmanView extends JPanel {
      * Méthode pour créer l'interface graphique.
      */
     private void createGUI() {
-        addButton(mainPanel, helloButton);
+        addButton(mainPanel, generateWordToGuessButton);
         addLabel(mainPanel, wordLabel);
+
+        // Ajout d'un écouteur d'événements au bouton "Générer le mot à deviner"
+        addButtonListener(e -> {
+            // Supprimer le libellé du mot à deviner s'il existe déjà
+            if (wordToGuessLabel != null) {
+                mainPanel.remove(wordToGuessLabel);
+            }
+
+            // Rafraîchir l'interface graphique pour appliquer les modifications
+            mainPanel.revalidate();
+            mainPanel.repaint();
+
+            // Récupérer le mot à deviner depuis le modèle
+            String wordToGuess = HangmanModel.getWordToGuess();
+            // Créer un nouveau libellé pour afficher le mot à deviner
+            wordToGuessLabel = new JLabel(wordToGuess);
+            // Ajouter le libellé du mot à deviner au panneau principal après le libellé initial
+            addLabel(mainPanel, wordToGuessLabel);
+
+            // Rafraîchir l'interface graphique pour afficher le nouveau libellé
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }, generateWordToGuessButton);
     }
 
     /**
