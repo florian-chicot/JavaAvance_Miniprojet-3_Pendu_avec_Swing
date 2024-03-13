@@ -9,7 +9,7 @@ import static fr.ecole3il.rodez2023.filemanagement.RandomWordPicker.pickRandomWo
  * Cette classe fournit des méthodes pour gérer les données du jeu du pendu.
  */
 public class HangmanModel {
-    private static final int MAX_ERRORS = 7;
+    private static final int MAX_ERRORS = 10;
     private int numberOfErrors;
 
     /**
