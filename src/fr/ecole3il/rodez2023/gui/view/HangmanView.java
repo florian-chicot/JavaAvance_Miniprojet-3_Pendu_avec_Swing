@@ -87,7 +87,10 @@ public class HangmanView extends JPanel {
      * @param errors Le nombre d'erreurs.
      */
     public void setErrorsLabelText(int errors) {
+        String imagePath = "images/hangman" + errors + ".png";
         errorsLabel.setText("Nombre d'erreurs : " + errors);
+        ImageIcon icon = new ImageIcon(imagePath);
+        errorsLabel.setIcon(icon);
     }
 
     /**
