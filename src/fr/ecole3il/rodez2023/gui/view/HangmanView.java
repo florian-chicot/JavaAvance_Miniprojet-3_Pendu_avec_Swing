@@ -1,9 +1,6 @@
 package fr.ecole3il.rodez2023.gui.view;
 
-import fr.ecole3il.rodez2023.gui.model.HangmanModel;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -13,10 +10,10 @@ import java.awt.event.ActionListener;
 public class HangmanView extends JPanel {
 
     private JPanel mainPanel;
-    private JLabel wordLabel;
-    private JButton generateWordToGuessButton;
     private JLabel wordToGuessLabel;
-
+    private JButton generateWordToGuessButton;
+    private JButton incrementErrorsButton;
+    private JLabel errorsLabel;
 
     /**
      * Constructeur de la classe HangmanView.
@@ -24,10 +21,9 @@ public class HangmanView extends JPanel {
     public HangmanView() {
         this.mainPanel = new JPanel();
         this.generateWordToGuessButton = new JButton("Générer le mot à deviner");
-        this.wordLabel = new JLabel("Mot à deviner : ");
-
-        // Initialiser le libellé du mot à deviner avec une chaîne vide
-        this.wordToGuessLabel = new JLabel();
+        this.wordToGuessLabel = new JLabel("Mot à deviner : ");
+        this.incrementErrorsButton = new JButton("Incrémenter les erreurs");
+        this.errorsLabel = new JLabel("Nombre d'erreurs : 0");
 
         // Initialisation de l'interface graphique
         createGUI();
@@ -38,30 +34,9 @@ public class HangmanView extends JPanel {
      */
     private void createGUI() {
         addButton(mainPanel, generateWordToGuessButton);
-        addLabel(mainPanel, wordLabel);
-
-        // Ajout d'un écouteur d'événements au bouton "Générer le mot à deviner"
-        addButtonListener(e -> {
-            // Supprimer le libellé du mot à deviner s'il existe déjà
-            if (wordToGuessLabel != null) {
-                mainPanel.remove(wordToGuessLabel);
-            }
-
-            // Rafraîchir l'interface graphique pour appliquer les modifications
-            mainPanel.revalidate();
-            mainPanel.repaint();
-
-            // Récupérer le mot à deviner depuis le modèle
-            String wordToGuess = HangmanModel.getWordToGuess();
-            // Créer un nouveau libellé pour afficher le mot à deviner
-            wordToGuessLabel = new JLabel(wordToGuess);
-            // Ajouter le libellé du mot à deviner au panneau principal après le libellé initial
-            addLabel(mainPanel, wordToGuessLabel);
-
-            // Rafraîchir l'interface graphique pour afficher le nouveau libellé
-            mainPanel.revalidate();
-            mainPanel.repaint();
-        }, generateWordToGuessButton);
+        addLabel(mainPanel, wordToGuessLabel);
+        addButton(mainPanel, incrementErrorsButton);
+        addLabel(mainPanel, errorsLabel);
     }
 
     /**
@@ -71,6 +46,23 @@ public class HangmanView extends JPanel {
      */
     public void addButton(JPanel panel, JButton button) {
         panel.add(button);
+    }
+
+
+    /**
+     * Méthode pour ajouter un ActionListener au bouton de génération du mot à deviner.
+     * @param listener L'ActionListener à ajouter.
+     */
+    public void addGenereateWordToGuessButtonListener(ActionListener listener) {
+        generateWordToGuessButton.addActionListener(listener);
+    }
+
+    /**
+     * Méthode pour ajouter un ActionListener au bouton d'incrémentation des erreurs.
+     * @param listener L'ActionListener à ajouter.
+     */
+    public void addIncrementErrorsButtonListener(ActionListener listener) {
+        incrementErrorsButton.addActionListener(listener);
     }
 
     /**
@@ -83,12 +75,19 @@ public class HangmanView extends JPanel {
     }
 
     /**
-     * Ajoute un écouteur d'événements à un bouton spécifié.
-     * @param listener L'écouteur d'événements à ajouter au bouton.
-     * @param button Le bouton auquel ajouter l'écouteur d'événements.
+     * Méthode pour définir le libellé du mot à deviner.
+     * @param wordToGuess Le mot à deviner.
      */
-    public void addButtonListener(ActionListener listener, JButton button) {
-        button.addActionListener(listener);
+    public void setWordToGuessLabel(String wordToGuess) {
+        wordToGuessLabel.setText("Mot à deviner : " + wordToGuess);
+    }
+
+    /**
+     * Méthode pour définir le texte du libellé des erreurs.
+     * @param errors Le nombre d'erreurs.
+     */
+    public void setErrorsLabelText(int errors) {
+        errorsLabel.setText("Nombre d'erreurs : " + errors);
     }
 
     /**

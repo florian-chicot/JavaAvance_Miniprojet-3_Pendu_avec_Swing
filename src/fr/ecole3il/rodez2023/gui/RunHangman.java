@@ -6,7 +6,6 @@ import fr.ecole3il.rodez2023.gui.view.HangmanView;
 
 import javax.swing.*;
 
-import static fr.ecole3il.rodez2023.gui.model.HangmanModel.getWordToGuess;
 
 /**
  * @author florian-chicot
@@ -40,9 +39,6 @@ public class RunHangman extends JFrame {
      * @param args les arguments de la ligne de commande (non utilisés dans cette application)
      */
     public static void main(String[] args) {
-        // Afficher le mot à deviner dans la console
-        System.out.println(getWordToGuess());
-
         // Lancer l'application sur le thread de l'interface utilisateur
         SwingUtilities.invokeLater(RunHangman::new);
     }
